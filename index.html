@@ -12,11 +12,22 @@
 <body onload="init()">
     <h1>MINESWEEPER GAME!</h1>
     <h2>Lives: <span>3</span></h2>
+    <div class="hints"> Hints Remained:
+        <span onclick="showHint(this)">💡</span>
+        <span onclick="showHint(this)">💡</span>
+        <span onclick="showHint(this)">💡</span>
+    </div>
+    <div class="safeClicks"> Safe Picks Remained:
+        <span onclick="showSafe(this)">🔍</span>
+        <span onclick="showSafe(this)">🔍</span>
+        <span onclick="showSafe(this)">🔍</span>
+    </div>
     <div class="btn-container">Difficulty:
         <button onclick="changeDifficulty(this,4,2)">Easy</button>
         <button onclick="changeDifficulty(this,8,12)">Medium</button>
         <button onclick="changeDifficulty(this,12,30)">Hard</button>
     </div>
+    <h3><span onclick="restart()">😀</span></h3>
     <div class="board-container">
         <div class="board" id="noContextMenu">
 
