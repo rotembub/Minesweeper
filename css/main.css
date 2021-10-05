@@ -6,7 +6,7 @@ html{
 }
 h1{
     color: green;
-    mix-blend-mode:exclusion;
+    mix-blend-mode:difference;
     text-shadow: 2px 2px white;
 
     text-align: center;
@@ -129,7 +129,7 @@ tr{
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    background-color: deeppink;
+    background-image: linear-gradient(to left, white , deeppink);
     color:white;
 
 }
