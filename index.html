@@ -33,7 +33,8 @@
         <span onclick="showSafe(this)">🔍</span>
     </div>
 
-    <button class='manual' onclick="manuallyCreate()">Manually</button>
+    <span>Game Types: <button class='manual' onclick="manuallyCreate()">Manually</button> <button class='sevenBoom'
+            onclick="sevenBoom()">7Boom!</button><button class="undo" onclick="undo()">Undo</button></span>
 
     <div class="btn-container">Difficulty:
         <button onclick="changeDifficulty(this,4,2)">Easy</button>
@@ -42,12 +43,15 @@
     </div>
 
     <h3><span onclick="restart()">😀</span></h3>
+
+    <div class="timer"></div>
+
     <div class="board-container">
         <div class="board" id="noContextMenu">
 
         </div>
     </div>
-    <div class="timer"></div>
+
 
 
     <script src="js/utility.js"></script>

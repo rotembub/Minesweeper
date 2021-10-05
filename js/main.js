@@ -8,10 +8,16 @@ var gFlag = '🚩';
 var gLives = 3;
 var gMarkedCorrectly = 0;
 
-var gIsManual = false; // watchout for init();
-var gManuallyPlaced = 0; // watchout for init();
+var gIsManual = false;
+var gManuallyPlaced = 0;
 
 var gIdx = 0;
+var gSevenBoom = false;
+
+var gOldgBoards = [];   // need to reset after init();
+var gOldElBoards = []; // need to reset after init();
+var gOldgGames = [];
+var gOldMarkeds = [];
 
 var gHints = 3;
 var gHintIsPressed = false;
@@ -52,9 +58,16 @@ function init() {
     gIsManual = false;
     gManuallyPlaced = 0;
     gIdx = 0;
+    gSevenBoom = false;
+
+    gOldgBoards = [];
+    gOldElBoards = [];
+    gOldgGames = [];
+    gOldMarkeds = [];
 
     gLives = 3;
     updateLives();
+    updateSmiley();
     gMarkedCorrectly = 0;
     gHints = 3;
     gHintIsPressed = false;
@@ -143,7 +156,7 @@ function setMinesNegsCount(cellI, cellJ, mat) {
 }
 
 function firstClickSetup(coordI, coordJ) {
-    if (gManuallyPlaced !== gLevel.MINES) {  //WATCHOUT
+    if (gManuallyPlaced !== gLevel.MINES && !gSevenBoom) {  //WATCHOUT
         placeMinesRandomly(gLevel.MINES, gBoard, coordI, coordJ);
     }
     gMinesCoords = [];
@@ -191,19 +204,22 @@ function cellClicked(elCell, i, j) {
     if (gBoard[i][j].isShown || gBoard[i][j].isMarked) return;
     if (!gGame.isOn && gGame.shownCount !== 0) return;
 
+    // if (!gFirstClick) saveLastMove(); ////////////////////////////////////////////////////////////////////////////////////////
+
     //watchout
     if (gIsManual) {
         placingManually(i, j);
         return;
     }
-    //
 
     if (!gGame.isOn) startTimer();
 
     if (gFirstClick) {
+
         firstClickSetup(i, j);
+        saveLastMove();
         gFirstClick = false;
-    }
+    } else saveLastMove();
 
     if (gHintIsPressed) {
         revealHintedCell(elCell, i, j);
@@ -253,6 +269,9 @@ function cellClicked(elCell, i, j) {
 function cellMarked(elCell, i, j) {
     if (gBoard[i][j].isShown) return;
     if (!gGame.isOn && gGame.shownCount !== 0) return;
+
+    saveLastMove(); /////////////////////////////////////////////////////////////////////////////////////////
+
     if (!gGame.isOn) startTimer();
 
     gBoard[i][j].isMarked = !gBoard[i][j].isMarked;
@@ -558,11 +577,75 @@ function placingManually(cellI, cellJ) {
         elCell.classList.remove('bordered');
     }, 500);
 
-
     if (gManuallyPlaced === gLevel.MINES) {
         gIsManual = false;
         alert('All mines have been placed!');
     }
+}
+
+function sevenBoom() {
+    if (gGame.isOn) return;
+    alert('Mines are placed according to the 7Boom! logic');
+    gSevenBoom = true;
+    var counter = 0;
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[0].length; j++) {
+            if (i === 0 && j === 0) continue;
+            var cell = gBoard[i][j];
+            var idx = '' + cell.idx;
+            if (idx.includes('7') || +idx % 7 === 0) {
+                cell.isMine = true;
+                counter++;
+            }
+        }
+    }
+    gLevel.MINES = counter;
+}
+
+
+// ill get back to it later
+// need to save innerHtml of table on every change
+// need to also save gboard before every change
+// then keep them both in an array or something 
+function undo() {
+    if (gOldElBoards.length === 0) return;
+    console.log('Undoing');
+    gBoard = gOldgBoards.pop();
+
+    gGame = JSON.parse(JSON.stringify(gOldgGames.pop()));
+    gMarkedCorrectly = gOldMarkeds.pop();
+
+
+    var elBoard = document.querySelector('.board');
+    elBoard.innerHTML = gOldElBoards.pop();
+
+}
+
+// Undo does not give lives/hints/picks back and not reseting the timer (cause thats cheating!)
+function saveLastMove() {
+    //saving gboard
+    var oldgBoard = [];
+    for (var i = 0; i < gBoard.length; i++) {
+        oldgBoard[i] = [];
+        for (var j = 0; j < gBoard.length; j++) {
+            var cell = gBoard[i][j];
+            var copiedCell = JSON.parse(JSON.stringify(cell));
+            oldgBoard[i].push(copiedCell);
+        }
+    }
+    console.log(oldgBoard);
+    gOldgBoards.push(oldgBoard);
+
+    //saving innerhtml
+    var elBoard = document.querySelector('.board');
+    var oldElBoard = elBoard.innerHTML;
+    gOldElBoards.push(oldElBoard);
+
+    //saving other stuff;
+    var oldgGame = JSON.parse(JSON.stringify(gGame));
+    gOldgGames.push(oldgGame);
+    var oldMarked = gMarkedCorrectly;
+    gOldMarkeds.push(oldMarked);
 
 
 }

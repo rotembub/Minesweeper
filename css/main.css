@@ -21,11 +21,18 @@ h1{
 } */
 
 h3{
+    margin:auto;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     font-size: 40px;
-    
+}
+h3 span{
+    margin:auto;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 40px;
 }
 
 .btn-container{
@@ -82,7 +89,8 @@ tr{
     font-size: 20px;
     color: black;
     margin-top: 15px;
-    /* width: 40px; */
+    margin-bottom: 15px;
+    height: fit-content;
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
