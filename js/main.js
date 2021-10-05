@@ -209,7 +209,12 @@ function cellClicked(elCell, i, j) {
         return;
     }
     else if (gBoard[i][j].minesAroundCount !== 0) elSpanInCell.innerText = gBoard[i][j].minesAroundCount;
-    else elSpanInCell.innerText = '';
+    else {
+        // elSpanInCell.innerText = '';
+        expandShown(gBoard, elCell, i, j)
+        updateSmiley();
+        checkGameOver();
+    }
     // changes finish
     var elSpanInCell = elCell.querySelector('span');
     elSpanInCell.classList.add('shown');
@@ -287,9 +292,36 @@ function checkGameOver() {
 // at the Bonuses section below)
 
 
-function expandShown(board, elCell, i, j) {
-    // if()
+function expandShown(board, elCell, cellI, cellJ) {
+    if (board[cellI][cellJ].isMine) return;
+    if (board[cellI][cellJ].isMarked) return;
+    if (board[cellI][cellJ].minesAroundCount !== 0) {
+        renderCell(board[cellI][cellJ], cellI, cellJ);
+        gGame.shownCount++;
+        return;
+    }
+    if (!board[cellI][cellJ].isShown) {
+        board[cellI][cellJ].isShown = true;
+        elCell.classList.add('shown');
+        gGame.shownCount++;
+    }
+    for (var i = cellI - 1; i <= cellI + 1; i++) {
+        if (i < 0 || i >= board.length) continue;
+        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+            if (j < 0 || j >= board[i].length) continue;
+            if (i === cellI && j === cellJ) continue;
 
+            if (board[i][j].isMine) continue;
+            if (board[i][j].isMarked) continue;
+            if (board[i][j].isShown) continue;
+
+            var elCurrCell = document.querySelector(`#cell-${i}-${j}`);
+            console.log(elCurrCell);
+            expandShown(board, elCurrCell, i, j);
+        }
+    }
+
+    return;
 }
 
 
