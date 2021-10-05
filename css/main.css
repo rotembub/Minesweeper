@@ -1,19 +1,31 @@
 
-
-h1{
-    color:red;
+html{
+    /* background: violet; */
+    background-blend-mode:difference;
+    background-image: linear-gradient(to right, white , deeppink);
 }
-h2{
+h1{
+    color: green;
+    mix-blend-mode:exclusion;
+    text-shadow: 2px 2px white;
+
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
+
+/* h2{
+    text-align: center;
+    margin-left: auto; 
+    margin-right: auto;
+} */
 
 h3{
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     font-size: 40px;
+    
 }
 
 .btn-container{
@@ -22,10 +34,14 @@ h3{
     margin-right: auto;
 }
 
+.btn-container button{
+    mix-blend-mode: lighten;
+}
+
 .board{
     text-align: center;
-    background-color: white;
-    border-style: solid;
+    
+
 }
 table{
     margin-left:  auto;
@@ -58,7 +74,7 @@ tr{
 }
 
 .marked{
-    background-color: red;
+    /* background-color: deeppink; */
     visibility: visible;
 }
 
@@ -66,16 +82,72 @@ tr{
     font-size: 20px;
     color: black;
     margin-top: 15px;
+    /* width: 40px; */
     padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    /* display: inline-block; */
     background-color: deeppink;
-    color: turquoise;
+    /* mix-blend-mode:multiply; */
+    color:white;
+    /* float: right; */
 }
 
 .bolded{
-    background-color: white;
+    background-color: transparent;
     background-blend-mode: screen, difference, lighten;
 }
 
 .safeClicks{
+    /* color: green;
+    mix-blend-mode:exclusion;
+    text-shadow: 2px 2px white; */
+    
+    /* display: inline-block; */
     margin-top: 5px;
+    width: fit-content;
+    height: fit-content;
+    /* background-color: deeppink; */
+}
+
+/* .safeClicks span{
+    color: initial;
+    text-shadow: none;
+    mix-blend-mode:exclusion;
+} */
+
+.hints{
+    /* display: inline-block; */
+    margin-top: 5px;
+    width: fit-content;
+    height: fit-content;
+    /* background-color: deeppink; */
+
+}
+
+.modal {
+    display: none;
+    width: 300px;
+    height: 300px;
+    background-color: pink;
+    position:absolute;
+    padding: 50px;
+  
+    border: 5px white solid;
+
+}
+
+.modal .win{
+    display: none;
+    color: blue;
+}
+
+.modal .lose{
+    display: none;
+    color: red;
+}
+
+.bordered{
+    background-color: black;
 }
