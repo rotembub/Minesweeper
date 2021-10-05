@@ -14,8 +14,8 @@ var gManuallyPlaced = 0;
 var gIdx = 0;
 var gSevenBoom = false;
 
-var gOldgBoards = [];   // need to reset after init();
-var gOldElBoards = []; // need to reset after init();
+var gOldgBoards = [];  
+var gOldElBoards = []; 
 var gOldgGames = [];
 var gOldMarkeds = [];
 var gOldFirstClicks = [];
@@ -29,7 +29,6 @@ var gMinesCoords;
 
 var gTime;
 var gTimerInterval;
-// var gGame.isOn = false;
 
 var gLevel = {
     SIZE: 4,
@@ -50,10 +49,9 @@ noContext.addEventListener('contextmenu', e => {
 });
 // watchout
 
-
-
-
 //This is called when page loads 
+
+//huge i know, but u kept asking for more things xD
 function init() {
 
     gIsManual = false;
@@ -109,22 +107,8 @@ function buildBoard() {
             board[i][j] = cell;
         }
     }
-
-
-    // placeMinesRandomly(gLevel.MINES, board);
-
-    // gMinesCoords = [];
-    // for (var i = 0; i < gLevel.SIZE; i++) {
-    //     for (var j = 0; j < gLevel.SIZE; j++) {
-    //         if (board[i][j].isMine) gMinesCoords.push({ i: i, j: j });
-    //         board[i][j].minesAroundCount = setMinesNegsCount(i, j, board);
-    //     }
-    // }
-
     return board;
 }
-
-
 
 function placeMinesRandomly(num, board, firstCellI, firstCellJ) {
 
@@ -134,11 +118,8 @@ function placeMinesRandomly(num, board, firstCellI, firstCellJ) {
             currCell = board[getRandomInt(0, gLevel.SIZE)][getRandomInt(0, gLevel.SIZE)];
         }
         currCell.isMine = true;
-
     }
-
 }
-
 
 // Count mines around each cell 
 // and set the cell's 
@@ -188,7 +169,6 @@ function renderBoard(board) {
                 } else {
                     strHTML += cellStartTag + `<span>${cell.minesAroundCount}</span></td>`;
                 }
-
             }
         }
         strHTML += '</tr>';
@@ -200,7 +180,6 @@ function renderBoard(board) {
 
 // Called when a cell (td) is 
 // clicked
-
 
 function cellClicked(elCell, i, j) {
     if (gBoard[i][j].isShown || gBoard[i][j].isMarked) return;
@@ -232,7 +211,7 @@ function cellClicked(elCell, i, j) {
 
     gBoard[i][j].isShown = true;
     elCell.classList.add('shown');
-    //changes start
+
     var elSpanInCell = elCell.querySelector('span');
     if (gBoard[i][j].isMine) {
         elSpanInCell.innerText = gMine;
@@ -249,12 +228,11 @@ function cellClicked(elCell, i, j) {
     }
     else if (gBoard[i][j].minesAroundCount !== 0) elSpanInCell.innerText = gBoard[i][j].minesAroundCount;
     else {
-        // elSpanInCell.innerText = '';
         expandShown(gBoard, elCell, i, j)
         updateSmiley();
         checkGameOver();
     }
-    // changes finish
+
     var elSpanInCell = elCell.querySelector('span');
     elSpanInCell.classList.add('shown');
 
@@ -272,8 +250,6 @@ function cellMarked(elCell, i, j) {
     if (gBoard[i][j].isShown) return;
     if (!gGame.isOn && gGame.shownCount !== 0) return;
 
-    /////////////////////////////////////////////////////////////////////////////////////////
-
     if (!gGame.isOn) startTimer();
     saveLastMove();
 
@@ -289,9 +265,7 @@ function cellMarked(elCell, i, j) {
     if (gBoard[i][j].isMine && gBoard[i][j].isMarked) gMarkedCorrectly++;
     if (gBoard[i][j].isMine && !gBoard[i][j].isMarked) gMarkedCorrectly--;
 
-
     checkGameOver();
-
 }
 
 // Game ends when all mines are 
@@ -328,7 +302,6 @@ function showModal(isWin) {
         elModal.style.display = 'block';
         elSpan.style.display = 'inline';
     }
-
 }
 
 // When user clicks a cell with no 
@@ -343,7 +316,6 @@ function showModal(isWin) {
 // later, try to work more like the 
 // real algorithm (see description 
 // at the Bonuses section below)
-
 
 function expandShown(board, elCell, cellI, cellJ) {
     if (board[cellI][cellJ].isMine) return;
@@ -376,9 +348,8 @@ function expandShown(board, elCell, cellI, cellJ) {
     return;
 }
 
-
 function startTimer() {
-    if (clearInterval) stopTimer; /////////////////////////////////////////////
+    if (clearInterval) stopTimer; 
     gGame.isOn = true;
     var elTimer = document.querySelector('.timer');
     var start = Date.now();
@@ -429,9 +400,6 @@ function updateLives() {
         elSpan.innerText += '💖';
     }
 
-    // var elspan = document.querySelector('h2 span');
-    // console.log(elspan);
-    // elspan.innerText = gLives;
 }
 
 function updateSmiley(status) {
@@ -470,7 +438,6 @@ function hideModal() {
 }
 
 function showHint(elHint) {
-
     if (gHints === 0) return;
     elHint.style.display = 'none';
     gHintIsPressed = true;
@@ -483,27 +450,21 @@ function revealHintedCell(elCell, cellI, cellJ) {
         if (i < 0 || i >= gBoard.length) continue;
         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
             if (j < 0 || j >= gBoard[i].length) continue;
-            // var clickedAlready = gBoard[i][j].isShown;
             if (gBoard[i][j].isShown) continue;
-            // var markedAlready = gBoard[i][j].isMarked;
             if (gBoard[i][j].isMarked) continue;
             shownCells.push({ i: i, j: j })
             renderCell(gBoard[i][j], i, j);
         }
     }
-    // console.log(shownCells);
     setTimeout(() => {
         for (var i = 0; i < shownCells.length; i++) {
-            // console.log(gBoard[i][j]);
             gBoard[shownCells[i].i][shownCells[i].j].isShown = false;
             var elCell = document.querySelector(`#cell-${shownCells[i].i}-${shownCells[i].j}`);
             var elSpan = elCell.querySelector('span');
             elCell.classList.remove('shown');
             elSpan.classList.remove('shown');
         }
-
     }, 1000);
-
 }
 
 function displayHints() {
@@ -529,14 +490,10 @@ function showSafe(elSpan) {
     }
     var idx = getRandomInt(0, safePicks.length);
     if (elCells.length === 0) return;
-    // elCells[idx].style.backgroundColor = 'blue';
     elCells[idx].classList.add('bolded');
     setTimeout(() => {
-        // elCells[idx].style.backgroundColor = 'deeppink';
         elCells[idx].classList.remove('bolded');
     }, 1500);
-
-
 }
 function displaySafePicks() {
     var safePicks = document.querySelectorAll('.safeClicks span');
@@ -545,8 +502,7 @@ function displaySafePicks() {
     }
 }
 
-
-
+//didnt think i would need it at first, but as stuff got more complicated i just had to
 function renderCell(cell, cellI, cellJ) {
     if (cell.isShown) return;
     cell.isShown = true;
@@ -562,10 +518,8 @@ function renderCell(cell, cellI, cellJ) {
 
 function manuallyCreate() {
     if (gGame.isOn || gSevenBoom) return;
-    // gIsGameManual = true;
     var minesLeft = gLevel.MINES;
     gIsManual = true;
-    
     alert('place: ' + minesLeft + ' mines in the locations you wish');
 
 }
@@ -608,11 +562,6 @@ function sevenBoom() {
     gLevel.MINES = counter;
 }
 
-
-// ill get back to it later
-// need to save innerHtml of table on every change
-// need to also save gboard before every change
-// then keep them both in an array or something 
 function undo() {
     if (gOldElBoards.length === 0) return;
     console.log('Undoing');
@@ -621,14 +570,12 @@ function undo() {
     gGame = JSON.parse(JSON.stringify(gOldgGames.pop()));
     gMarkedCorrectly = gOldMarkeds.pop();
 
-
     var elBoard = document.querySelector('.board');
     elBoard.innerHTML = gOldElBoards.pop();
-    gFirstClick = gOldFirstClicks.pop();///////////////////////////////////////
-
+    gFirstClick = gOldFirstClicks.pop();
 }
 
-// Undo does not give lives/hints/picks back and not reseting the timer (cause thats cheating!)
+// Undo does not give lives/hints/picks back and does not reset the timer (cause thats cheating!)
 function saveLastMove() {
     //saving gboard
     var oldgBoard = [];
@@ -640,7 +587,6 @@ function saveLastMove() {
             oldgBoard[i].push(copiedCell);
         }
     }
-    console.log(oldgBoard);
     gOldgBoards.push(oldgBoard);
 
     //saving innerhtml
@@ -653,8 +599,8 @@ function saveLastMove() {
     gOldgGames.push(oldgGame);
     var oldMarked = gMarkedCorrectly;
     gOldMarkeds.push(oldMarked);
-    var oldFirstClick = gFirstClick;///////////////////////////////
-    gOldFirstClicks.push(oldFirstClick);//////////////////////////
+    var oldFirstClick = gFirstClick;
+    gOldFirstClicks.push(oldFirstClick);
 
 
 }
