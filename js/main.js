@@ -206,7 +206,7 @@ function cellClicked(elCell, i, j) {
     if (gBoard[i][j].isShown || gBoard[i][j].isMarked) return;
     if (!gGame.isOn && gGame.shownCount !== 0) return;
 
-    
+
 
     //watchout
     if (gIsManual) {
@@ -561,9 +561,11 @@ function renderCell(cell, cellI, cellJ) {
 }
 
 function manuallyCreate() {
-    if (gGame.isOn) return;
+    if (gGame.isOn || gSevenBoom) return;
+    // gIsGameManual = true;
     var minesLeft = gLevel.MINES;
     gIsManual = true;
+    
     alert('place: ' + minesLeft + ' mines in the locations you wish');
 
 }
@@ -587,7 +589,8 @@ function placingManually(cellI, cellJ) {
 }
 
 function sevenBoom() {
-    if (gGame.isOn) return;
+    if (gGame.isOn || gManuallyPlaced !== 0) return;
+
     alert('Mines are placed according to the 7Boom! logic');
     gSevenBoom = true;
     var counter = 0;

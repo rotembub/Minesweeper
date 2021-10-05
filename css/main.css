@@ -34,25 +34,18 @@ h3 span{
     margin-right: auto;
     font-size: 40px;
 }
+h3 :hover{
+    cursor: pointer;
+}
 
 
 
 .items{
-    /* display:inline-block;
-    position:relative;
-    text-align: center;
-    width: max-content;
-    white-space: nowrap; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px
 }
 
-/* .items div{
-    display:inline-block;
-    text-align: center;
-    
-} */
 
 .details{
     position: relative;
@@ -70,14 +63,21 @@ h3 span{
     white-space: normal;
 }
 
+.btn-container button:hover{
+    cursor: pointer;
+}
+
 .btn-container button{
     margin-right: 10px;
     mix-blend-mode: lighten;
+
 }
 
 .spn-btns button{
     mix-blend-mode: darken;
+
 }
+
 
 .board{
     text-align: center;
@@ -87,7 +87,7 @@ h3 span{
 table{
     margin-left:  auto;
     margin-right: auto;
-    color: turquoise;
+    color: black;
     border: 5px black solid;
 }
 td{
@@ -129,11 +129,9 @@ tr{
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    /* display: inline-block; */
     background-color: deeppink;
-    /* mix-blend-mode:multiply; */
     color:white;
-    /* float: right; */
+
 }
 
 .bolded{
@@ -142,40 +140,44 @@ tr{
 }
 
 .safeClicks{
-    /* color: green;
-    mix-blend-mode:exclusion;
-    text-shadow: 2px 2px white; */
-    
-    /* display: inline-block; */
     margin-top: 5px;
-    width: fit-content;
+    width: 150px;
     height: fit-content;
-    /* background-color: deeppink; */
-}
 
-/* .safeClicks span{
-    color: initial;
-    text-shadow: none;
-    mix-blend-mode:exclusion;
-} */
+}
+.safeClicks :hover{
+    cursor: pointer;
+}
 
 .hints{
     /* display: inline-block; */
     margin-top: 5px;
-    width: fit-content;
+    width: 120px;
     height: fit-content;
     /* background-color: deeppink; */
+}
+.hints :hover{
+    cursor: pointer;
+}
 
+.lives{
+    margin-top: 5px;
+    width: 120px;
+    height: fit-content;
+}
+.lives :hover{
+    cursor: pointer;
 }
 
 .modal {
     display: none;
-    width: 300px;
+    width: 150px;
     height: 50px;
     background-color: pink;
     position:fixed;
     padding: 50px;
-    margin-left: auto;
+    top: 30%;
+    left: 40%;
     border: 5px white solid;
 
 }
