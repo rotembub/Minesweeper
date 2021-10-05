@@ -1,6 +1,6 @@
 
 html{
-    /* background: violet; */
+
     background-blend-mode:difference;
     background-image: linear-gradient(to right, white , deeppink);
 }
@@ -35,14 +35,48 @@ h3 span{
     font-size: 40px;
 }
 
-.btn-container{
+
+
+.items{
+    /* display:inline-block;
+    position:relative;
     text-align: center;
+    width: max-content;
+    white-space: nowrap; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px
+}
+
+/* .items div{
+    display:inline-block;
+    text-align: center;
+    
+} */
+
+.details{
+    position: relative;
+    display:inline-flex;
+    float: left;
+    white-space: normal;
+    
+}
+
+.btn-container{
     margin-left: auto;
-    margin-right: auto;
+    display:inline-flex;
+    text-align: center;
+    float: right;
+    white-space: normal;
 }
 
 .btn-container button{
+    margin-right: 10px;
     mix-blend-mode: lighten;
+}
+
+.spn-btns button{
+    mix-blend-mode: darken;
 }
 
 .board{
@@ -86,11 +120,11 @@ tr{
 }
 
 .timer {
-    font-size: 20px;
+    font-size: 15px;
     color: black;
     margin-top: 15px;
     margin-bottom: 15px;
-    height: fit-content;
+    height: 15px;
     padding: 5px;
     margin-left: auto;
     margin-right: auto;
@@ -137,11 +171,11 @@ tr{
 .modal {
     display: none;
     width: 300px;
-    height: 300px;
+    height: 50px;
     background-color: pink;
-    position:absolute;
+    position:fixed;
     padding: 50px;
-  
+    margin-left: auto;
     border: 5px white solid;
 
 }

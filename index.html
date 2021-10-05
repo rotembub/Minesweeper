@@ -11,41 +11,46 @@
 
 <body onload="init()">
     <h1>Minesweeper!</h1>
-
-
-
     <!-- <h2> ♥ Lives: <span>3</span></h2> -->
-
     <div class="modal">
         <button class="btn" onclick="restart()">Play Again</button>
         You have <span class='win'>WON!</span><span class="lose">LOST!</span>
     </div>
 
-    <div class="lives">Lives: <span></span></div>
-    <div class="hints"> Hints Remained:
-        <span onclick="showHint(this)">💡</span>
-        <span onclick="showHint(this)">💡</span>
-        <span onclick="showHint(this)">💡</span>
+    <div class="items">
+        <div class="details">
+            <div class="lives">Lives:<span></span></div>
+            <div class="hints"> Hints:
+                <span onclick="showHint(this)">💡</span>
+                <span onclick="showHint(this)">💡</span>
+                <span onclick="showHint(this)">💡</span>
+            </div>
+            <div class="safeClicks"> Safe Picks:
+                <span onclick="showSafe(this)">🔍</span>
+                <span onclick="showSafe(this)">🔍</span>
+                <span onclick="showSafe(this)">🔍</span>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <div>Difficulty:
+                <button onclick="changeDifficulty(this,4,2)">Easy</button>
+                <button onclick="changeDifficulty(this,8,12)">Medium</button>
+                <button onclick="changeDifficulty(this,12,30)">Hard</button>
+            </div>
+            <div>Game Types:
+                <button class='manual' onclick="manuallyCreate()">Manually</button>
+                <button class='sevenBoom' onclick="sevenBoom()">7Boom!</button>
+                <button class="undo" onclick="undo()">Undo</button>
+            </div>
+        </div>
     </div>
-    <div class="safeClicks"> Safe Picks Remained:
-        <span onclick="showSafe(this)">🔍</span>
-        <span onclick="showSafe(this)">🔍</span>
-        <span onclick="showSafe(this)">🔍</span>
+
+    <div>
+        <h3><span onclick="restart()">😀</span></h3>
+
+        <div class="timer"></div>
     </div>
-
-    <span>Game Types: <button class='manual' onclick="manuallyCreate()">Manually</button> <button class='sevenBoom'
-            onclick="sevenBoom()">7Boom!</button><button class="undo" onclick="undo()">Undo</button></span>
-
-    <div class="btn-container">Difficulty:
-        <button onclick="changeDifficulty(this,4,2)">Easy</button>
-        <button onclick="changeDifficulty(this,8,12)">Medium</button>
-        <button onclick="changeDifficulty(this,12,30)">Hard</button>
-    </div>
-
-    <h3><span onclick="restart()">😀</span></h3>
-
-    <div class="timer"></div>
-
     <div class="board-container">
         <div class="board" id="noContextMenu">
 

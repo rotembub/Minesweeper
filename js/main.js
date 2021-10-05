@@ -18,6 +18,7 @@ var gOldgBoards = [];   // need to reset after init();
 var gOldElBoards = []; // need to reset after init();
 var gOldgGames = [];
 var gOldMarkeds = [];
+var gOldFirstClicks = [];
 
 var gHints = 3;
 var gHintIsPressed = false;
@@ -64,6 +65,7 @@ function init() {
     gOldElBoards = [];
     gOldgGames = [];
     gOldMarkeds = [];
+    gOldFirstClicks = [];
 
     gLives = 3;
     updateLives();
@@ -204,7 +206,7 @@ function cellClicked(elCell, i, j) {
     if (gBoard[i][j].isShown || gBoard[i][j].isMarked) return;
     if (!gGame.isOn && gGame.shownCount !== 0) return;
 
-    // if (!gFirstClick) saveLastMove(); ////////////////////////////////////////////////////////////////////////////////////////
+    
 
     //watchout
     if (gIsManual) {
@@ -214,11 +216,11 @@ function cellClicked(elCell, i, j) {
 
     if (!gGame.isOn) startTimer();
 
-    if (gFirstClick) {
+    if (gFirstClick) { // watchout
 
         firstClickSetup(i, j);
-        saveLastMove();
         gFirstClick = false;
+        saveLastMove();
     } else saveLastMove();
 
     if (gHintIsPressed) {
@@ -270,9 +272,10 @@ function cellMarked(elCell, i, j) {
     if (gBoard[i][j].isShown) return;
     if (!gGame.isOn && gGame.shownCount !== 0) return;
 
-    saveLastMove(); /////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////
 
     if (!gGame.isOn) startTimer();
+    saveLastMove();
 
     gBoard[i][j].isMarked = !gBoard[i][j].isMarked;
     var elSpanInCell = elCell.querySelector('span');
@@ -375,13 +378,13 @@ function expandShown(board, elCell, cellI, cellJ) {
 
 
 function startTimer() {
-
+    if (clearInterval) stopTimer; /////////////////////////////////////////////
     gGame.isOn = true;
     var elTimer = document.querySelector('.timer');
     var start = Date.now();
     gTimerInterval = setInterval(() => {
         gTime = ((Date.now() - start) / 1000);
-        elTimer.innerText = ((Date.now() - start) / 1000);
+        elTimer.innerText = ((Date.now() - start) / 1000).toFixed(2);
     }, 100);
 }
 
@@ -618,6 +621,7 @@ function undo() {
 
     var elBoard = document.querySelector('.board');
     elBoard.innerHTML = gOldElBoards.pop();
+    gFirstClick = gOldFirstClicks.pop();///////////////////////////////////////
 
 }
 
@@ -646,6 +650,8 @@ function saveLastMove() {
     gOldgGames.push(oldgGame);
     var oldMarked = gMarkedCorrectly;
     gOldMarkeds.push(oldMarked);
+    var oldFirstClick = gFirstClick;///////////////////////////////
+    gOldFirstClicks.push(oldFirstClick);//////////////////////////
 
 
 }
