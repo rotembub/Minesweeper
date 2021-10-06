@@ -32,6 +32,11 @@ var gMinesCoords;
 var gTime;
 var gTimerInterval;
 
+var gSounds = {
+    right: new Audio('sounds/sfx-pop3.mp3'),
+    wrong: new Audio('sounds/incorrect.swf.mp3')
+};
+
 var gLevel = {
     SIZE: 4,
     MINES: 2
@@ -223,6 +228,7 @@ function cellClicked(elCell, i, j) {
         gMarkedCorrectly++;
         gGame.shownCount--;
         // ^^^^^^^^^^^ i'm aware of the showncount not being precise at the end but i calculate victory differently.
+        gSounds.wrong.play();
         updateSmiley('hurt');
         updateLives()
         checkGameOver();
@@ -234,7 +240,7 @@ function cellClicked(elCell, i, j) {
         updateSmiley();
         checkGameOver();
     }
-
+    gSounds.right.play();
     var elSpanInCell = elCell.querySelector('span');
     elSpanInCell.classList.add('shown');
 
