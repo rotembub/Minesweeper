@@ -7,8 +7,8 @@ html{
 h1{
     color: green;
     mix-blend-mode:difference;
-    text-shadow: 2px 2px white;
-
+    text-shadow: 2px 2px blue;
+    font-family: cursive;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -110,12 +110,16 @@ tr{
 }
 
 .shown{
+    transition:background-color 1s;
     background-color: yellow;
     visibility: visible;
 }
+span.shown{
+    background-color: transparent;
+}
 
 .marked{
-    /* background-color: deeppink; */
+    background-color:honeydew;
     visibility: visible;
 }
 
@@ -135,7 +139,8 @@ tr{
 }
 
 .bolded{
-    background-color: transparent;
+    transition:background-color 1s;
+    background-color: white;
     background-blend-mode: screen, difference, lighten;
 }
 
@@ -193,5 +198,6 @@ tr{
 }
 
 .bordered{
+    transition:background-color 1s;
     background-color: black;
 }

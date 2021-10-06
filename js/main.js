@@ -14,11 +14,13 @@ var gManuallyPlaced = 0;
 var gIdx = 0;
 var gSevenBoom = false;
 
-var gOldgBoards = [];  
-var gOldElBoards = []; 
-var gOldgGames = [];
-var gOldMarkeds = [];
-var gOldFirstClicks = [];
+var gOld = {
+    boards: [],
+    elboards: [],
+    games: [],
+    markeds: [],
+    firstclicks: []
+};
 
 var gHints = 3;
 var gHintIsPressed = false;
@@ -59,11 +61,13 @@ function init() {
     gIdx = 0;
     gSevenBoom = false;
 
-    gOldgBoards = [];
-    gOldElBoards = [];
-    gOldgGames = [];
-    gOldMarkeds = [];
-    gOldFirstClicks = [];
+    gOld = {
+        boards: [],
+        elboards: [],
+        games: [],
+        markeds: [],
+        firstclicks: []
+    };
 
     gLives = 3;
     updateLives();
@@ -149,7 +153,7 @@ function firstClickSetup(coordI, coordJ) {
             gBoard[i][j].minesAroundCount = setMinesNegsCount(i, j, gBoard);
         }
     }
-    console.log(gMinesCoords);
+    // console.log(gMinesCoords);
 }
 
 // Render the board as a <table> 
@@ -185,8 +189,6 @@ function cellClicked(elCell, i, j) {
     if (gBoard[i][j].isShown || gBoard[i][j].isMarked) return;
     if (!gGame.isOn && gGame.shownCount !== 0) return;
 
-
-
     //watchout
     if (gIsManual) {
         placingManually(i, j);
@@ -217,10 +219,10 @@ function cellClicked(elCell, i, j) {
         elSpanInCell.innerText = gMine;
         elSpanInCell.classList.add('shown');
         gLives--;
-        // to give support for lives counting this as a mark so the player could win the game:
+        // to give support for lives counting this as a markedCorrectly so the player could win the game:
         gMarkedCorrectly++;
         gGame.shownCount--;
-        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        // ^^^^^^^^^^^ i'm aware of the showncount not being precise at the end but i calculate victory differently.
         updateSmiley('hurt');
         updateLives()
         checkGameOver();
@@ -254,6 +256,7 @@ function cellMarked(elCell, i, j) {
     saveLastMove();
 
     gBoard[i][j].isMarked = !gBoard[i][j].isMarked;
+    elCell.classList.toggle('marked'); 
     var elSpanInCell = elCell.querySelector('span');
     elSpanInCell.classList.toggle('marked');
 
@@ -341,7 +344,7 @@ function expandShown(board, elCell, cellI, cellJ) {
             if (board[i][j].isShown) continue;
 
             var elCurrCell = document.querySelector(`#cell-${i}-${j}`);
-            console.log(elCurrCell);
+            // console.log(elCurrCell);
             expandShown(board, elCurrCell, i, j);
         }
     }
@@ -349,7 +352,7 @@ function expandShown(board, elCell, cellI, cellJ) {
 }
 
 function startTimer() {
-    if (clearInterval) stopTimer; 
+    if (clearInterval) stopTimer;
     gGame.isOn = true;
     var elTimer = document.querySelector('.timer');
     var start = Date.now();
@@ -513,7 +516,6 @@ function renderCell(cell, cellI, cellJ) {
     if (cell.isMine) elSpan.innerText = gMine;
     else if (cell.minesAroundCount !== 0) elSpan.innerText = cell.minesAroundCount;
     else elSpan.innerText = '';
-
 }
 
 function manuallyCreate() {
@@ -521,7 +523,6 @@ function manuallyCreate() {
     var minesLeft = gLevel.MINES;
     gIsManual = true;
     alert('place: ' + minesLeft + ' mines in the locations you wish');
-
 }
 
 function placingManually(cellI, cellJ) {
@@ -562,20 +563,22 @@ function sevenBoom() {
     gLevel.MINES = counter;
 }
 
-function undo() {
-    if (gOldElBoards.length === 0) return;
-    console.log('Undoing');
-    gBoard = gOldgBoards.pop();
-
-    gGame = JSON.parse(JSON.stringify(gOldgGames.pop()));
-    gMarkedCorrectly = gOldMarkeds.pop();
-
-    var elBoard = document.querySelector('.board');
-    elBoard.innerHTML = gOldElBoards.pop();
-    gFirstClick = gOldFirstClicks.pop();
-}
 
 // Undo does not give lives/hints/picks back and does not reset the timer (cause thats cheating!)
+
+function undo() {
+    if (gOld.elboards.length === 0) return;
+    console.log('Undoing');
+    gBoard = gOld.boards.pop();
+
+    gGame = JSON.parse(JSON.stringify(gOld.games.pop()));
+    gMarkedCorrectly = gOld.markeds.pop();
+
+    var elBoard = document.querySelector('.board');
+    elBoard.innerHTML = gOld.elboards.pop();
+    gFirstClick = gOld.firstclicks.pop();
+}
+
 function saveLastMove() {
     //saving gboard
     var oldgBoard = [];
@@ -587,20 +590,18 @@ function saveLastMove() {
             oldgBoard[i].push(copiedCell);
         }
     }
-    gOldgBoards.push(oldgBoard);
+    gOld.boards.push(oldgBoard);
 
     //saving innerhtml
     var elBoard = document.querySelector('.board');
     var oldElBoard = elBoard.innerHTML;
-    gOldElBoards.push(oldElBoard);
+    gOld.elboards.push(oldElBoard);
 
     //saving other stuff;
     var oldgGame = JSON.parse(JSON.stringify(gGame));
-    gOldgGames.push(oldgGame);
+    gOld.games.push(oldgGame);
     var oldMarked = gMarkedCorrectly;
-    gOldMarkeds.push(oldMarked);
+    gOld.markeds.push(oldMarked);
     var oldFirstClick = gFirstClick;
-    gOldFirstClicks.push(oldFirstClick);
-
-
+    gOld.firstclicks.push(oldFirstClick);
 }
