@@ -540,7 +540,8 @@ function placingManually(cellI, cellJ) {
 
     if (gManuallyPlaced === gLevel.MINES) {
         gIsManual = false;
-        alert('All mines have been placed!');
+        showDoneModal();
+        // alert('All mines have been placed!');
     }
 }
 
@@ -571,6 +572,11 @@ function manualModal(){
     elModal.style.display = 'block';
     var elSpan = elModal.querySelector('span');
     elSpan.innerText = gLevel.MINES;
+}
+
+function showDoneModal(){
+    var elModal = document.querySelector('.done');
+    elModal.style.display = 'block';
 }
 
 function sevenBoomModal(){

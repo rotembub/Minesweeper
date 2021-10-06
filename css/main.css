@@ -41,6 +41,7 @@ h3 :hover{
 
 
 .items{
+    font-family: Snell Roundhand, cursive;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px
@@ -146,7 +147,7 @@ span.shown{
 
 .safeClicks{
     margin-top: 5px;
-    width: 150px;
+    width: 170px;
     height: fit-content;
 
 }
@@ -175,6 +176,7 @@ span.shown{
 }
 
 .modal {
+    font-family: Snell Roundhand, cursive;
     display: none;
     width: 150px;
     height: 50px;
@@ -203,6 +205,7 @@ span.shown{
 }
 
 .modalManual {
+    font-family: Snell Roundhand, cursive;
     display: none;
     width: fit-content;
     height: 50px;
@@ -216,10 +219,10 @@ span.shown{
 .modalManual button{
     margin-top: 15px;
     margin-left: 40%;
-
 }
 
 .modalSevenBoom {
+    font-family: Snell Roundhand, cursive;
     display: none;
     width: fit-content;
     height: 50px;
@@ -234,5 +237,26 @@ span.shown{
 .modalSevenBoom button{
     margin-top: 15px;
     margin-left: 40%;
+}
 
+.done {
+    font-family: Snell Roundhand, cursive;
+    display: none;
+    width: fit-content;
+    height: 50px;
+    background-color: pink;
+    position:fixed;
+    padding: 50px;
+    top: 30%;
+    left: 40%;
+    border: 5px white solid;
+}
+
+.done button{
+    margin-top: 15px;
+    margin-left: 40%;
+}
+
+.undo{
+    border:black dotted;
 }
