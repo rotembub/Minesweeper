@@ -201,3 +201,38 @@ span.shown{
     transition:background-color 1s;
     background-color: black;
 }
+
+.modalManual {
+    display: none;
+    width: fit-content;
+    height: 50px;
+    background-color: pink;
+    position:fixed;
+    padding: 50px;
+    top: 30%;
+    left: 40%;
+    border: 5px white solid;
+}
+.modalManual button{
+    margin-top: 15px;
+    margin-left: 40%;
+
+}
+
+.modalSevenBoom {
+    display: none;
+    width: fit-content;
+    height: 50px;
+    background-color: pink;
+    position:fixed;
+    padding: 50px;
+    top: 30%;
+    left: 40%;
+    border: 5px white solid;
+}
+
+.modalSevenBoom button{
+    margin-top: 15px;
+    margin-left: 40%;
+
+}

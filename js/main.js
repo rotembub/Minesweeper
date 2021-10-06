@@ -520,9 +520,10 @@ function renderCell(cell, cellI, cellJ) {
 
 function manuallyCreate() {
     if (gGame.isOn || gSevenBoom) return;
-    var minesLeft = gLevel.MINES;
+    // var minesLeft = gLevel.MINES;
     gIsManual = true;
-    alert('place: ' + minesLeft + ' mines in the locations you wish');
+    // alert('place: ' + minesLeft + ' mines in the locations you wish');
+    manualModal();
 }
 
 function placingManually(cellI, cellJ) {
@@ -546,7 +547,8 @@ function placingManually(cellI, cellJ) {
 function sevenBoom() {
     if (gGame.isOn || gManuallyPlaced !== 0) return;
 
-    alert('Mines are placed according to the 7Boom! logic');
+    // alert('Mines are placed according to the 7Boom! logic');
+    sevenBoomModal();
     gSevenBoom = true;
     var counter = 0;
     for (var i = 0; i < gBoard.length; i++) {
@@ -563,6 +565,21 @@ function sevenBoom() {
     gLevel.MINES = counter;
 }
 
+
+function manualModal(){
+    var elModal = document.querySelector('.modalManual');
+    elModal.style.display = 'block';
+    var elSpan = elModal.querySelector('span');
+    elSpan.innerText = gLevel.MINES;
+}
+
+function sevenBoomModal(){
+    var elModal = document.querySelector('.modalSevenBoom');
+    elModal.style.display = 'block';
+}
+function closeWindow(elBtn){
+    elBtn.parentElement.style.display = 'none';
+}
 
 // Undo does not give lives/hints/picks back and does not reset the timer (cause thats cheating!)
 
